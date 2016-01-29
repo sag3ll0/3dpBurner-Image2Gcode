@@ -28,13 +28,13 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Runtime.InteropServices;
-
+using System.Diagnostics;
 
 namespace _3dpBurnerImage2Gcode
 {
     public partial class Form1 : Form
     {
-        const string ver = "v0.3";
+        const string ver = "v0.4";
         Bitmap originalImage;
         Bitmap adjustedImage;
         float lastValue;//Aux for apply processing to image only when a new value is detected
@@ -550,6 +550,75 @@ namespace _3dpBurnerImage2Gcode
             }
             catch { }
         }
+
+        private String modelOrigin()
+        {
+            String travel2 = "G0 ";
+            float width = float.Parse(tbWidth.Text);
+            float height = float.Parse(tbHeight.Text);
+
+            if (ori0.Checked) {
+                //Move from bottom left corner
+                travel2 += "Y" + height;
+            }
+
+            else if (ori1.Checked)
+            {
+                //Move from Bottom mid
+                travel2 += "X-" + width/2 + " Y" + height;
+            }
+
+            else if (ori2.Checked)
+            {
+                //Move from bottom right corner
+                travel2 += "X-" + width + " Y" + height;
+            }
+
+            else if (ori3.Checked)
+            {
+                //Move from left mid
+                travel2 += "Y" + height / 2;
+            }
+
+            else if (ori4.Checked)
+            {
+                //Move from middle
+                travel2 += "X-" + width / 2 + " Y" + height / 2;
+            }
+
+            else if (ori5.Checked)
+            {
+                //Move from right mid
+                travel2 += "X-" + width + " Y" + height / 2;
+            }
+
+            else if (ori6.Checked)
+            {
+                //Don't do anything; already here
+                travel2 = "";
+            }
+
+            else if (ori7.Checked)
+            {
+                //Move from top mid
+                travel2 += "X-" + width / 2;
+            }
+
+            else
+            {
+                //Move from top right corner
+                travel2 += "X-" + width;
+            }
+
+            //Draw box outline with laser power = S5
+            travel2 += "; Move to top left corner and begin box\rG92 X0 Y" + height + "\r";
+            travel2 += "\rM106 S5\r";
+            travel2 += "G0 X" + width + "\r";
+            travel2 += "G0 Y0\r";
+            travel2 += "G0 X0\r";
+            return travel2;
+        }
+        
         //Generate a "minimalist" gcode line based on the actual and last coordinates and laser power
         string line;
         float coordX;//X
@@ -606,7 +675,7 @@ namespace _3dpBurnerImage2Gcode
 
             if ((resol <= 0) | (adjustedImage.Width < 1) | (adjustedImage.Height < 1) | (w < 1) | (h < 1))
             {
-                MessageBox.Show("Check widht, height and resolution values.", "Invalid value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Check width, height and resolution values.", "Invalid value", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (Convert.ToInt32(tbFeedRate.Text) < 1)
@@ -659,14 +728,19 @@ namespace _3dpBurnerImage2Gcode
             Int32 pixTot = adjustedImage.Width * adjustedImage.Height;
             Int32 pixBurned = 0;
             //////////////////////////////////////////////
-            // Generate Gcode lines by Horozontal scanning
+            // Generate Gcode lines by Horizontal scanning
             //////////////////////////////////////////////
             if (cbEngravingPattern.Text == "Horizontal scanning")
             {
-                //Goto rapid move to lef top corner
+                //Travel from modelOrigin to top left
+                line = modelOrigin();
+                fileLines.Add(line);
+                //Goto rapid move to left top corner
                 line = "G0 X0 Y" + string.Format(CultureInfo.InvariantCulture.NumberFormat, "{0:0.###}", adjustedImage.Height * Convert.ToSingle(tbRes.Text, CultureInfo.InvariantCulture.NumberFormat));
                 fileLines.Add(line);
                 line = "G1\r";//G1 mode
+                fileLines.Add(line);
+                line = "M106 S0";
                 fileLines.Add(line);
                 //line = "M106\r";//Switch laser on
                 //fileLines.Add(line);
@@ -737,10 +811,15 @@ namespace _3dpBurnerImage2Gcode
             //////////////////////////////////////////////
             else
             {
-                //Goto rapid move to lef top corner
+                //Travel from modelOrigin to top left
+                line = modelOrigin();
+                fileLines.Add(line);
+                //Goto rapid move to left top corner
                 line = "G0 X0 Y0";
                 fileLines.Add(line);
                 line = "G1\r";//G1 mode
+                fileLines.Add(line);
+                line = "M106 S0";
                 fileLines.Add(line);
                 //line = "M106\r";//Switch laser on
                 //fileLines.Add(line);
@@ -856,11 +935,11 @@ namespace _3dpBurnerImage2Gcode
             File.WriteAllLines(saveFileDialog1.FileName , fileLines);
             lblStatus.Text = "Done (" + Convert.ToString(pixBurned) + "/" + Convert.ToString(pixTot)+")";
         }
-        //Horizontal mirroing
+        //Horizontal mirroring
         private void btnHorizMirror_Click(object sender, EventArgs e)
         {
             if (adjustedImage == null) return;//if no image, do nothing
-            lblStatus.Text = "Mirroing...";
+            lblStatus.Text = "Mirroring...";
             Refresh();
             adjustedImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
             originalImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
@@ -1022,6 +1101,8 @@ namespace _3dpBurnerImage2Gcode
                 if (cbLockRatio.Checked) tbHeight.Text = Convert.ToString((Convert.ToSingle(tbWidth.Text) / ratio), CultureInfo.InvariantCulture.NumberFormat);//Initialize y size
                 userAdjust();
                 lblStatus.Text = "Done";
+                string fN = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
+                saveFileDialog1.FileName = fN + ".gco";
             }
             catch (Exception err)
             {

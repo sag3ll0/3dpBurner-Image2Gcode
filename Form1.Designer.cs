@@ -94,6 +94,16 @@ namespace _3dpBurnerImage2Gcode
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.ori8 = new System.Windows.Forms.RadioButton();
+            this.ori7 = new System.Windows.Forms.RadioButton();
+            this.ori6 = new System.Windows.Forms.RadioButton();
+            this.ori5 = new System.Windows.Forms.RadioButton();
+            this.ori4 = new System.Windows.Forms.RadioButton();
+            this.ori3 = new System.Windows.Forms.RadioButton();
+            this.ori2 = new System.Windows.Forms.RadioButton();
+            this.ori1 = new System.Windows.Forms.RadioButton();
+            this.ori0 = new System.Windows.Forms.RadioButton();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.cbDirthering = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -147,6 +157,7 @@ namespace _3dpBurnerImage2Gcode
             this.tabPage3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tBarGamma)).BeginInit();
@@ -163,14 +174,14 @@ namespace _3dpBurnerImage2Gcode
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileName = "";
             this.openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.bmp)| *.jpg; *.jpeg; *.jpe; *" +
     ".jfif; *.png; *.bmp|All files(*.*)|*.*";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.FileName = "file.nc";
-            this.saveFileDialog1.Filter = "G-Code Files(*.CNC;*.NC;*.TAP;*.TXT)|*.CNC;*.NC;*.TAP;*.TXT|All files (*.*)|*.*";
+            this.saveFileDialog1.FileName = ".gco";
+            this.saveFileDialog1.Filter = "G-Code Files(*.GCODE;*.CNC;*.NC;*.TAP;*.TXT)|*.GCO;*.GCODE;*.CNC;*.NC;*.TAP;*.TXT|All files (*.*)|*.*";
             // 
             // lblStatus
             // 
@@ -660,6 +671,7 @@ namespace _3dpBurnerImage2Gcode
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Window;
+            this.tabPage1.Controls.Add(this.groupBox7);
             this.tabPage1.Controls.Add(this.groupBox6);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox4);
@@ -671,6 +683,116 @@ namespace _3dpBurnerImage2Gcode
             this.tabPage1.Size = new System.Drawing.Size(200, 526);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Image";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.ori8);
+            this.groupBox7.Controls.Add(this.ori7);
+            this.groupBox7.Controls.Add(this.ori6);
+            this.groupBox7.Controls.Add(this.ori5);
+            this.groupBox7.Controls.Add(this.ori4);
+            this.groupBox7.Controls.Add(this.ori3);
+            this.groupBox7.Controls.Add(this.ori2);
+            this.groupBox7.Controls.Add(this.ori1);
+            this.groupBox7.Controls.Add(this.ori0);
+            this.groupBox7.Location = new System.Drawing.Point(1, 417);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(99, 106);
+            this.groupBox7.TabIndex = 28;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Origin";
+            // 
+            // ori8
+            // 
+            this.ori8.AutoSize = true;
+            this.ori8.Location = new System.Drawing.Point(69, 26);
+            this.ori8.Name = "ori8";
+            this.ori8.Size = new System.Drawing.Size(14, 13);
+            this.ori8.TabIndex = 8;
+            this.ori8.Tag = "ori8";
+            this.ori8.UseVisualStyleBackColor = true;
+            // 
+            // ori7
+            // 
+            this.ori7.AutoSize = true;
+            this.ori7.Location = new System.Drawing.Point(40, 26);
+            this.ori7.Name = "ori7";
+            this.ori7.Size = new System.Drawing.Size(14, 13);
+            this.ori7.TabIndex = 7;
+            this.ori7.Tag = "ori7";
+            this.ori7.UseVisualStyleBackColor = true;
+            // 
+            // ori6
+            // 
+            this.ori6.AutoSize = true;
+            this.ori6.Location = new System.Drawing.Point(12, 26);
+            this.ori6.Name = "ori6";
+            this.ori6.Size = new System.Drawing.Size(14, 13);
+            this.ori6.TabIndex = 6;
+            this.ori6.Tag = "ori6";
+            this.ori6.UseVisualStyleBackColor = true;
+            // 
+            // ori5
+            // 
+            this.ori5.AutoSize = true;
+            this.ori5.Location = new System.Drawing.Point(69, 50);
+            this.ori5.Name = "ori5";
+            this.ori5.Size = new System.Drawing.Size(14, 13);
+            this.ori5.TabIndex = 5;
+            this.ori5.Tag = "ori5";
+            this.ori5.UseVisualStyleBackColor = true;
+            // 
+            // ori4
+            // 
+            this.ori4.AutoSize = true;
+            this.ori4.Location = new System.Drawing.Point(40, 50);
+            this.ori4.Name = "ori4";
+            this.ori4.Size = new System.Drawing.Size(14, 13);
+            this.ori4.TabIndex = 4;
+            this.ori4.Tag = "ori4";
+            this.ori4.UseVisualStyleBackColor = true;
+            // 
+            // ori3
+            // 
+            this.ori3.AutoSize = true;
+            this.ori3.Location = new System.Drawing.Point(12, 50);
+            this.ori3.Name = "ori3";
+            this.ori3.Size = new System.Drawing.Size(14, 13);
+            this.ori3.TabIndex = 3;
+            this.ori3.Tag = "ori3";
+            this.ori3.UseVisualStyleBackColor = true;
+            // 
+            // ori2
+            // 
+            this.ori2.AutoSize = true;
+            this.ori2.Location = new System.Drawing.Point(69, 75);
+            this.ori2.Name = "ori2";
+            this.ori2.Size = new System.Drawing.Size(14, 13);
+            this.ori2.TabIndex = 2;
+            this.ori2.Tag = "ori2";
+            this.ori2.UseVisualStyleBackColor = true;
+            // 
+            // ori1
+            // 
+            this.ori1.AutoSize = true;
+            this.ori1.Location = new System.Drawing.Point(40, 75);
+            this.ori1.Name = "ori1";
+            this.ori1.Size = new System.Drawing.Size(14, 13);
+            this.ori1.TabIndex = 1;
+            this.ori1.Tag = "ori1";
+            this.ori1.UseVisualStyleBackColor = true;
+            // 
+            // ori0
+            // 
+            this.ori0.AutoSize = true;
+            this.ori0.Checked = true;
+            this.ori0.Location = new System.Drawing.Point(12, 75);
+            this.ori0.Name = "ori0";
+            this.ori0.Size = new System.Drawing.Size(14, 13);
+            this.ori0.TabIndex = 0;
+            this.ori0.TabStop = true;
+            this.ori0.Tag = "ori0";
+            this.ori0.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -1162,6 +1284,8 @@ namespace _3dpBurnerImage2Gcode
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -1277,6 +1401,16 @@ namespace _3dpBurnerImage2Gcode
         private System.Windows.Forms.TextBox tbLeatherPower;
         private System.Windows.Forms.TextBox tbAAPower;
         private System.Windows.Forms.RadioButton rbAA;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.RadioButton ori8;
+        private System.Windows.Forms.RadioButton ori7;
+        private System.Windows.Forms.RadioButton ori6;
+        private System.Windows.Forms.RadioButton ori5;
+        private System.Windows.Forms.RadioButton ori4;
+        private System.Windows.Forms.RadioButton ori3;
+        private System.Windows.Forms.RadioButton ori2;
+        private System.Windows.Forms.RadioButton ori1;
+        private System.Windows.Forms.RadioButton ori0;
     }
 }
 
