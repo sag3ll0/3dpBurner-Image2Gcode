@@ -25,4 +25,7 @@ Check the "Releases" for release versions and .exe files.
 //-------------------------------------------------------
 
 Image2GCode has been modified by Leo69 for use on Marlin firmware for MPCNC
+
 Additional modifications made by Bryan (Uthayne)
+    Profiles
+    Origin
