@@ -15,6 +15,7 @@
 */
 //Form 1 (Main form)
 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,7 +35,7 @@ namespace _3dpBurnerImage2Gcode
 {
     public partial class Form1 : Form
     {
-        const string ver = "v0.4";
+        const string ver = "v0.5";
         Bitmap originalImage;
         Bitmap adjustedImage;
         float lastValue;//Aux for apply processing to image only when a new value is detected
@@ -133,7 +134,7 @@ namespace _3dpBurnerImage2Gcode
         }
         
         //Interpolate a 8 bit grayscale value (0-255) between min,max
-        private Int32 interpolate(Int32 grayValue, Int32 min, Int32 max)
+        private float interpolate(float grayValue, Int32 min, Int32 max)
         {
             Int32 dif=max-min;
             return (min + ((grayValue * dif) / 255));
@@ -623,10 +624,10 @@ namespace _3dpBurnerImage2Gcode
         string line;
         float coordX;//X
         float coordY;//Y
-        Int32 sz;//S (or Z)
+        float sz;//S (or Z)
         float lastX;//Last x/y  coords for compare
         float lastY;
-        Int32 lastSz;//last 'S' value for compare
+        float lastSz;//last 'S' value for compare
         string szChar;//Use 'S' or 'Z' for test laser power
         string coordXStr;//String formated X
         string coordYStr;////String formated Y
@@ -661,7 +662,8 @@ namespace _3dpBurnerImage2Gcode
            
             if (sz != lastSz)//Add power value to line if is diferent from previous
             {
-                szStr = szChar + Convert.ToString(sz) + "\r";
+                szStr = szChar + sz.ToString("F4") + "\r";
+                //szStr = szChar + Convert.ToString(sz) + "\r";
                 line += szStr;
             }
         }
@@ -840,7 +842,6 @@ namespace _3dpBurnerImage2Gcode
                     Color cl = adjustedImage.GetPixel(col, (adjustedImage.Height - 1) - lin);//Get pixel color
                     sz = 255 - cl.R;
                     sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
-
                     generateLine();
                     pixBurned++;
 
@@ -874,7 +875,6 @@ namespace _3dpBurnerImage2Gcode
                     Color cl = adjustedImage.GetPixel(col, (adjustedImage.Height - 1) - lin);//Get pixel color
                     sz = 255 - cl.R;
                     sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
-
                     generateLine();
                     pixBurned++;
                     
