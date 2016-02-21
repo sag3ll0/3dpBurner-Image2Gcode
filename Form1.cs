@@ -15,7 +15,6 @@
 */
 //Form 1 (Main form)
 
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -662,7 +661,7 @@ namespace _3dpBurnerImage2Gcode
            
             if (sz != lastSz)//Add power value to line if is diferent from previous
             {
-                szStr = szChar + sz.ToString("F4");
+                szStr = szChar + sz.ToString("F4", CultureInfo.InvariantCulture);
                 //szStr = szChar + Convert.ToString(sz) + "\r";
                 line += szStr;
             }
