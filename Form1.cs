@@ -35,7 +35,7 @@ namespace _3dpBurnerImage2Gcode
 {
     public partial class Form1 : Form
     {
-        const string ver = "v0.5";
+        const string ver = "v0.6";
         Bitmap originalImage;
         Bitmap adjustedImage;
         float lastValue;//Aux for apply processing to image only when a new value is detected
@@ -134,9 +134,9 @@ namespace _3dpBurnerImage2Gcode
         }
         
         //Interpolate a 8 bit grayscale value (0-255) between min,max
-        private float interpolate(float grayValue, Int32 min, Int32 max)
+        private float interpolate(float grayValue, float min, float max)
         {
-            Int32 dif=max-min;
+            float dif=max-min;
             return (min + ((grayValue * dif) / 255));
         }
 
@@ -612,11 +612,11 @@ namespace _3dpBurnerImage2Gcode
             }
 
             //Draw box outline with laser power = S5
-            travel2 += "; Move to top left corner and begin box\rG92 X0 Y" + height + "\r";
-            travel2 += "\rM106 S5\r";
-            travel2 += "G0 X" + width + "\r";
-            travel2 += "G0 Y0\r";
-            travel2 += "G0 X0\r";
+            travel2 += "; Move to top left corner and begin box\r\nG92 X0 Y" + height + "\r\n";
+            travel2 += "\r\n" + comboBoxOnCode.Text + "5\r\n";
+            travel2 += "G0 X" + width + "\r\n";
+            travel2 += "G0 Y0\r\n";
+            travel2 += "G0 X0\r\n";
             return travel2;
         }
         
@@ -650,7 +650,7 @@ namespace _3dpBurnerImage2Gcode
                     coordYStr = string.Format(CultureInfo.InvariantCulture.NumberFormat, "{0:0.###}", coordY);
                     line += 'Y' + coordYStr + ' ';
                 }
-                line += "\r";
+                //line += "\r";
             }
            
         }
@@ -662,7 +662,7 @@ namespace _3dpBurnerImage2Gcode
            
             if (sz != lastSz)//Add power value to line if is diferent from previous
             {
-                szStr = szChar + sz.ToString("F4") + "\r";
+                szStr = szChar + sz.ToString("F4");
                 //szStr = szChar + Convert.ToString(sz) + "\r";
                 line += szStr;
             }
@@ -706,7 +706,7 @@ namespace _3dpBurnerImage2Gcode
 
 
 
-            line = comboBoxOffCode.Text + "\r";//Make sure laser off
+            line = comboBoxOffCode.Text + "\r\n";//Make sure laser off
             fileLines.Add(line);
 
             //Add the pre-Gcode lines
@@ -717,13 +717,13 @@ namespace _3dpBurnerImage2Gcode
             {
                 fileLines.Add(s);
             }
-            line = "G90\r";//Absolute coordinates
+            line = "G90\r\n";//Absolute coordinates
             fileLines.Add(line);
 
-            if (imperialinToolStripMenuItem.Checked) line = "G20\r";//Imperial units
-                else line = "G21\r";//Metric units
+            if (imperialinToolStripMenuItem.Checked) line = "G20\r\n";//Imperial units
+                else line = "G21\r\n";//Metric units
             fileLines.Add(line);
-            line = "F" + tbFeedRate.Text + "\r";//Feedrate
+            line = "F" + tbFeedRate.Text + "\r\n";//Feedrate
             fileLines.Add(line);
 
             //Generate picture Gcode
@@ -740,9 +740,9 @@ namespace _3dpBurnerImage2Gcode
                 //Goto rapid move to left top corner
                 line = "G0 X0 Y" + string.Format(CultureInfo.InvariantCulture.NumberFormat, "{0:0.###}", adjustedImage.Height * Convert.ToSingle(tbRes.Text, CultureInfo.InvariantCulture.NumberFormat));
                 fileLines.Add(line);
-                line = "G1\r";//G1 mode
+                line = "G1";//G1 mode
                 fileLines.Add(line);
-                line = "M106 S0";
+                line = comboBoxOnCode.Text + "0";
                 fileLines.Add(line);
                 //line = "M106\r";//Switch laser on
                 //fileLines.Add(line);
@@ -761,7 +761,7 @@ namespace _3dpBurnerImage2Gcode
                         //Power value
                         Color cl = adjustedImage.GetPixel(col, (adjustedImage.Height - 1) - lin);//Get pixel color
                         sz = 255 - cl.R;
-                        sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
+                        sz = interpolate(sz, float.Parse(tbLaserMin.Text), float.Parse(tbLaserMax.Text));
                         generateLine();
                         pixBurned++;
                         //adjustedImage.SetPixel(col, (adjustedImage.Height-1)-lin, Color.Red);
@@ -786,7 +786,7 @@ namespace _3dpBurnerImage2Gcode
                         //Power value
                         Color cl = adjustedImage.GetPixel(col, (adjustedImage.Height - 1) - lin);//Get pixel color
                         sz = 255 - cl.R;
-                        sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
+                        sz = interpolate(sz, float.Parse(tbLaserMin.Text), float.Parse(tbLaserMax.Text));
                         generateLine();
                         pixBurned++;
                         //adjustedImage.SetPixel(col, (adjustedImage.Height-1)-lin, Color.Red);
@@ -819,9 +819,9 @@ namespace _3dpBurnerImage2Gcode
                 //Goto rapid move to left top corner
                 line = "G0 X0 Y0";
                 fileLines.Add(line);
-                line = "G1\r";//G1 mode
+                line = "G1";//G1 mode
                 fileLines.Add(line);
-                line = "M106 S0";
+                line = comboBoxOnCode.Text + "0";
                 fileLines.Add(line);
                 //line = "M106\r";//Switch laser on
                 //fileLines.Add(line);
@@ -841,7 +841,7 @@ namespace _3dpBurnerImage2Gcode
                     //Power value
                     Color cl = adjustedImage.GetPixel(col, (adjustedImage.Height - 1) - lin);//Get pixel color
                     sz = 255 - cl.R;
-                    sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
+                    sz = interpolate(sz, float.Parse(tbLaserMin.Text), float.Parse(tbLaserMax.Text));
                     generateLine();
                     pixBurned++;
 
@@ -874,7 +874,7 @@ namespace _3dpBurnerImage2Gcode
                     //Power value
                     Color cl = adjustedImage.GetPixel(col, (adjustedImage.Height - 1) - lin);//Get pixel color
                     sz = 255 - cl.R;
-                    sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
+                    sz = interpolate(sz, float.Parse(tbLaserMin.Text), float.Parse(tbLaserMax.Text));
                     generateLine();
                     pixBurned++;
                     
@@ -950,7 +950,7 @@ namespace _3dpBurnerImage2Gcode
         private void btnVertMirror_Click(object sender, EventArgs e)
         {
             if (adjustedImage == null) return;//if no image, do nothing
-            lblStatus.Text = "Mirroing...";
+            lblStatus.Text = "Mirroring...";
             Refresh();
             adjustedImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
             originalImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
@@ -1001,9 +1001,9 @@ namespace _3dpBurnerImage2Gcode
         private void cbDirthering_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (adjustedImage == null) return;//if no image, do nothing
-            if (cbDirthering.Text == "Dirthering FS 1 bit")
+            if (cbDirthering.Text == "Dithering FS 1 bit")
             {
-                lblStatus.Text = "Dirtering...";
+                lblStatus.Text = "Ditering...";
                 adjustedImage = imgDirther(adjustedImage);
                 pictureBox1.Image = adjustedImage;
                 lblStatus.Text = "Done";
@@ -1062,21 +1062,42 @@ namespace _3dpBurnerImage2Gcode
         //Laser Min keyPress
         private void tbLaserMin_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Prevent any not allowed char
-            if (!checkDigitInteger(e.KeyChar))
+            ////Prevent any not allowed char
+            //if (!checkDigitInteger(e.KeyChar))
+            //{
+            //    e.Handled = true;//Stop the character from being entered into the control since it is non-numerical.
+            //    return;
+            //}
+
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
-                e.Handled = true;//Stop the character from being entered into the control since it is non-numerical.
-                return;
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
             }
         }
         //Laser Max keyPress
         private void tbLaserMax_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Prevent any not allowed char
-            if (!checkDigitInteger(e.KeyChar))
+            ////Prevent any not allowed char
+            //if (!checkDigitInteger(e.KeyChar))
+            //{
+            //    e.Handled = true;//Stop the character from being entered into the control since it is non-numerical.
+            //    return;
+            //}
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
-                e.Handled = true;//Stop the character from being entered into the control since it is non-numerical.
-                return;
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
             }
         }
         //OpenFile, save picture grayscaled to originalImage and save the original aspect ratio to ratio
