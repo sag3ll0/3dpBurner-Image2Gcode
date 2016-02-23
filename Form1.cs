@@ -1000,7 +1000,7 @@ namespace _3dpBurnerImage2Gcode
         private void cbDirthering_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (adjustedImage == null) return;//if no image, do nothing
-            if (cbDirthering.Text == "Dithering FS 1 bit")
+            if (cbDirthering.Text == "Dirthering FS 1 bit")
             {
                 lblStatus.Text = "Ditering...";
                 adjustedImage = imgDirther(adjustedImage);
