@@ -148,6 +148,9 @@ namespace _3dpBurnerImage2Gcode
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.cbLaserDecimal = new System.Windows.Forms.CheckBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.cbOptimizedRaster = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBoxOffCode.SuspendLayout();
@@ -174,14 +177,14 @@ namespace _3dpBurnerImage2Gcode
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "";
             this.openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.bmp)| *.jpg; *.jpeg; *.jpe; *" +
     ".jfif; *.png; *.bmp|All files(*.*)|*.*";
             // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.FileName = ".gco";
-            this.saveFileDialog1.Filter = "G-Code Files(*.GCODE;*.CNC;*.NC;*.TAP;*.TXT)|*.GCO;*.GCODE;*.CNC;*.NC;*.TAP;*.TXT|All files (*.*)|*.*";
+            this.saveFileDialog1.Filter = "G-Code Files(*.GCODE;*.CNC;*.NC;*.TAP;*.TXT)|*.GCO;*.GCODE;*.CNC;*.NC;*.TAP;*.TXT" +
+    "|All files (*.*)|*.*";
             // 
             // lblStatus
             // 
@@ -414,6 +417,9 @@ namespace _3dpBurnerImage2Gcode
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.cbOptimizedRaster);
+            this.tabPage3.Controls.Add(this.label20);
+            this.tabPage3.Controls.Add(this.cbLaserDecimal);
             this.tabPage3.Controls.Add(this.groupBox1);
             this.tabPage3.Controls.Add(this.label10);
             this.tabPage3.Controls.Add(this.tbLaserMax);
@@ -447,7 +453,7 @@ namespace _3dpBurnerImage2Gcode
             this.groupBox1.Controls.Add(this.tbLeatherPower);
             this.groupBox1.Controls.Add(this.tbAAPower);
             this.groupBox1.Controls.Add(this.rbAA);
-            this.groupBox1.Location = new System.Drawing.Point(1, 192);
+            this.groupBox1.Location = new System.Drawing.Point(1, 295);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(198, 225);
             this.groupBox1.TabIndex = 41;
@@ -554,6 +560,8 @@ namespace _3dpBurnerImage2Gcode
             // cbFeedOverride
             // 
             this.cbFeedOverride.AutoSize = true;
+            this.cbFeedOverride.Checked = true;
+            this.cbFeedOverride.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbFeedOverride.Location = new System.Drawing.Point(4, 203);
             this.cbFeedOverride.Name = "cbFeedOverride";
             this.cbFeedOverride.Size = new System.Drawing.Size(139, 17);
@@ -1060,7 +1068,7 @@ namespace _3dpBurnerImage2Gcode
             // 
             this.tbHeight.Location = new System.Drawing.Point(56, 40);
             this.tbHeight.Name = "tbHeight";
-            this.tbHeight.Size = new System.Drawing.Size(36, 20);
+            this.tbHeight.Size = new System.Drawing.Size(43, 20);
             this.tbHeight.TabIndex = 11;
             this.tbHeight.Text = "100";
             this.tbHeight.Enter += new System.EventHandler(this.tbHeight_Enter);
@@ -1080,7 +1088,7 @@ namespace _3dpBurnerImage2Gcode
             // 
             this.tbWidth.Location = new System.Drawing.Point(56, 19);
             this.tbWidth.Name = "tbWidth";
-            this.tbWidth.Size = new System.Drawing.Size(36, 20);
+            this.tbWidth.Size = new System.Drawing.Size(43, 20);
             this.tbWidth.TabIndex = 10;
             this.tbWidth.Text = "60";
             this.tbWidth.Enter += new System.EventHandler(this.tbWidth_Enter);
@@ -1249,6 +1257,36 @@ namespace _3dpBurnerImage2Gcode
             this.pictureBox2.TabIndex = 11;
             this.pictureBox2.TabStop = false;
             // 
+            // cbLaserDecimal
+            // 
+            this.cbLaserDecimal.AutoSize = true;
+            this.cbLaserDecimal.Location = new System.Drawing.Point(8, 202);
+            this.cbLaserDecimal.Name = "cbLaserDecimal";
+            this.cbLaserDecimal.Size = new System.Drawing.Size(135, 17);
+            this.cbLaserDecimal.TabIndex = 42;
+            this.cbLaserDecimal.Text = "Enable Decimal Values";
+            this.cbLaserDecimal.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(5, 183);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(114, 13);
+            this.label20.TabIndex = 43;
+            this.label20.Text = "Experimental Features:";
+            // 
+            // cbOptimizedRaster
+            // 
+            this.cbOptimizedRaster.AutoSize = true;
+            this.cbOptimizedRaster.Location = new System.Drawing.Point(8, 222);
+            this.cbOptimizedRaster.Name = "cbOptimizedRaster";
+            this.cbOptimizedRaster.Size = new System.Drawing.Size(186, 17);
+            this.cbOptimizedRaster.TabIndex = 44;
+            this.cbOptimizedRaster.Text = "Optimized Raster (Horizontal Only)";
+            this.cbOptimizedRaster.UseVisualStyleBackColor = true;
+            this.cbOptimizedRaster.CheckedChanged += new System.EventHandler(this.cbOptimizedRaster_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1411,6 +1449,9 @@ namespace _3dpBurnerImage2Gcode
         private System.Windows.Forms.RadioButton ori2;
         private System.Windows.Forms.RadioButton ori1;
         private System.Windows.Forms.RadioButton ori0;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox cbLaserDecimal;
+        private System.Windows.Forms.CheckBox cbOptimizedRaster;
     }
 }
 
