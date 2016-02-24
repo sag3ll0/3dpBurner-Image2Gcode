@@ -34,7 +34,7 @@ namespace _3dpBurnerImage2Gcode
 {
     public partial class Form1 : Form
     {
-        const string ver = "v0.6";
+        const string ver = "v1.0";
         Bitmap originalImage;
         Bitmap adjustedImage;
         float lastValue;//Aux for apply processing to image only when a new value is detected
