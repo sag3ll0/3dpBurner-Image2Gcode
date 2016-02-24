@@ -867,6 +867,12 @@ namespace _3dpBurnerImage2Gcode
 
                         if (!cbLaserDecimal.Checked) { sz = Convert.ToInt32(sz); }
 
+                        //Preparing for power change, we need coordinate just before so set flag to false
+                        if (sz != lastSz)
+                        {
+                            deleteThisLine = false;
+                        }
+
                         generateLine();
                         pixBurned++;
                         //adjustedImage.SetPixel(col, (adjustedImage.Height-1)-lin, Color.Red);
