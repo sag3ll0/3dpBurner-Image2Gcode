@@ -16,10 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
-If you would like to support the future development of this program, feel free to donate at https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9WXWPYG4U53QL&lc=US&item_number=image2gcode&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted
-*/
-
 GitHub notes:
 The master branch contain the development version.
 Check the "Releases" for release versions and .exe files.
