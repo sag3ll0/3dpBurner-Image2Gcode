@@ -581,8 +581,8 @@ namespace _3dpBurnerImage2Gcode
         private String modelOrigin()
         {
             String travel2 = "G0 ";
-            float width = float.Parse(tbWidth.Text);
-            float height = float.Parse(tbHeight.Text);
+            float width = float.Parse(tbWidth.Text, CultureInfo.InvariantCulture.NumberFormat);
+            float height = float.Parse(tbHeight.Text, CultureInfo.InvariantCulture.NumberFormat);
 
             if (ori0.Checked) {
                 //Move from bottom left corner
@@ -821,10 +821,10 @@ namespace _3dpBurnerImage2Gcode
                         sz = 255 - cl.R;
                         }
 
-                        sz = interpolate(sz, float.Parse(tbLaserMin.Text), float.Parse(tbLaserMax.Text));
+                        sz = interpolate(sz, float.Parse(tbLaserMin.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(tbLaserMax.Text, CultureInfo.InvariantCulture.NumberFormat));
                         //sz = interpolate(sz, Convert.ToInt32(tbLaserMax.Text), Convert.ToInt32(tbLaserMax.Text));
 
-                        if(cbOptimizedRaster.Checked && sz < float.Parse(tbThreshold.Text)/100 * float.Parse(tbLaserMax.Text))
+                        if(cbOptimizedRaster.Checked && sz < float.Parse(tbThreshold.Text, CultureInfo.InvariantCulture.NumberFormat) /100 * float.Parse(tbLaserMax.Text, CultureInfo.InvariantCulture.NumberFormat))
                         {
                             sz = 0;
                         }
@@ -869,10 +869,10 @@ namespace _3dpBurnerImage2Gcode
                             sz = 255 - cl.R;
                         }
 
-                        sz = interpolate(sz, float.Parse(tbLaserMin.Text), float.Parse(tbLaserMax.Text));
+                        sz = interpolate(sz, float.Parse(tbLaserMin.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(tbLaserMax.Text, CultureInfo.InvariantCulture.NumberFormat));
                         //sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
 
-                        if (cbOptimizedRaster.Checked && sz < float.Parse(tbThreshold.Text) / 100 * float.Parse(tbLaserMax.Text))
+                        if (cbOptimizedRaster.Checked && sz < float.Parse(tbThreshold.Text, CultureInfo.InvariantCulture.NumberFormat) / 100 * float.Parse(tbLaserMax.Text, CultureInfo.InvariantCulture.NumberFormat))
                         {
                             sz = 0;
                         }
@@ -984,7 +984,7 @@ namespace _3dpBurnerImage2Gcode
                     Color cl = adjustedImage.GetPixel(col, (adjustedImage.Height - 1) - lin);//Get pixel color
                     sz = 255 - cl.R;
 
-                    sz = interpolate(sz, float.Parse(tbLaserMin.Text), float.Parse(tbLaserMax.Text));
+                    sz = interpolate(sz, float.Parse(tbLaserMin.Text, CultureInfo.InvariantCulture.NumberFormat), float.Parse(tbLaserMax.Text, CultureInfo.InvariantCulture.NumberFormat));
                     //sz = interpolate(sz, Convert.ToInt32(tbLaserMin.Text), Convert.ToInt32(tbLaserMax.Text));
 
                     if (!cbLaserDecimal.Checked) { sz = Convert.ToInt32(sz); }
