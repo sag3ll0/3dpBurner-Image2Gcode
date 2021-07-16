@@ -76,3 +76,5 @@ obj/Debug/
 /bin/release/*
 !/bin/Release/3dpBurner Image2Gcode.exe
 
+
+*.pdb
